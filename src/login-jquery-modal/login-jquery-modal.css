@@ -1,0 +1,107 @@
+body, button, input {
+ font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+ font-size: 11pt;
+}
+
+p {
+  margin: .75em 0;
+}
+
+h1 {
+  font-weight: normal;
+  padding-bottom: 10px;
+}
+
+button {
+  border: 1px solid grey;
+  border-radius: 2px;
+  padding: 4px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+:focus {
+  outline: none;
+}
+
+#app-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.idp-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.idp {
+  flex: 1 100%;
+  margin: .5em;
+
+  border: none;
+  border-radius: 2px;
+  padding: .5em;
+  background-color: rgb(61, 109, 211);
+  color: #fff;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.4s, box-shadow 0.4s;
+}
+
+.idp:hover,
+.idp:focus {
+  background-color: rgb(55, 97, 188);
+  box-shadow: 1px 1px rgb(46, 80, 151);
+}
+
+.idp:active {
+  cursor: pointer;
+  box-shadow: inset 1px 1px rgb(46, 80, 152);
+}
+
+.idp .icon {
+  display: flex;
+  height: 42px;
+  border-radius: 2px;
+  margin-left: .5em;
+}
+
+.custom-idp {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: .5em;
+}
+
+.custom-idp input {
+  flex-grow: 2;
+}
+
+.hidden {
+  display: none!important;
+}
+
+@media all and (min-width: 500px) {
+  .idp {
+    flex: 1 200px;
+  }
+}
+
+#app-container {
+  max-widht: 600px;
+  margin: auto;
+}
+
+/*
+ * CMSB: From jQuery dialog demo
+ */
+ label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:5px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .tip { border: 1px solid transparent; padding: 0.3em; }
+
