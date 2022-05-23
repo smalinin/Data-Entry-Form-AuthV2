@@ -5,8 +5,8 @@ var dialog;
 var form;
 var customIdp;
 
-// CMSB: At what point is this function called relative to event handler 
-// for DOMContentLoaded?
+// jQuery initialization after DOM/document is ready.
+// See also DOMContentLoaded listener.
 $( function() {
 
     customIdp = $("#login_custom_idp"),
@@ -49,20 +49,16 @@ $( function() {
     var valid = true;
     allFields.removeClass( "ui-state-error" );
 
-    // CMSB: FIX ME
-    // customIdp must be a jQuery object (initialized above)
-    // var customIdp = document.getElementById('login_custom_idp').value;
-    // if (customIdp.endsWith("/"))
-    //  customIdp = customIdp.substring(0, customIdp.length - 1)
+    var txtCustomIdp = customIdp.val();
+    if (txtCustomIdp.endsWith("/")) {
+      customIdp.val(txtCustomIdp.substring(0, txtCustomIdp.length - 1));
+    }
 
     valid = valid && checkLength( customIdp, "identity provider URL", 10, 80 );
     valid = valid && checkRegexp( customIdp, /^https?:\/\//, "The identity provider URL must begin with http[s]://" );
 
     if ( valid ) {
       console.log('customIdpLogin(): About to try login() with ' + customIdp.val());
-      console.log('customIdp:', customIdp);
-      // CMSB: TO DO: Make sure error handling and error logging is correct.
-      //
       login(customIdp.val());
       dialog.dialog( "close" );
     }
@@ -121,6 +117,9 @@ function initButton(id, action) {
 function login (idp) {
   console.log('login(): Calling solidClientAuthentication.login():'); 
   console.log('for idp: ' + idp);
+  // CMSB: TO DO: 
+  // Bolster error handling and logging.
+  // What error reporting does solidClientAuthentication.login() support?
   solidClientAuthentication.login({
     oidcIssuer: idp,
     redirectUrl: window.location.href,
@@ -128,25 +127,20 @@ function login (idp) {
   });
 }
 
-// Login Redirect. Call handleIncomingRedirect() function.
+// Post-login attempt redirect handler.
 // When redirected after login, finish the process by retrieving session information.
 async function handleRedirectAfterLogin() {
   await solidClientAuthentication.handleIncomingRedirect();
 
   const session = solidClientAuthentication.getDefaultSession();
   console.log('handleRedirectAfterLogin(): session:', session);
+  console.log('handleRedirectAfterLogin(): session.info.isLoggedIn: ', session.info.isLoggedIn);
   if (session.info.isLoggedIn) {
-    // Update the page with the login status.
-    // TO DO: Fix me
-    // document.getElementById("labelStatus").textContent = "Your session is logged in.";
-    // document.getElementById("labelStatus").setAttribute("role", "alert");
-    // document.getElementById("labelProfile").textContent = "WebID: " + session.info.webId;
-    console.log('handleRedirectAfterLogin(): session.info.isLoggedIn: ', session.info.isLoggedIn);
     console.log('handleRedirectAfterLogin(): session.info.webId: ', session.info.webId);
+    // Update the page with the login status.
     gAppState.updateLoginState();
   }
 }
-
 
 // Processes login information.
 // If the function is called when not part of the login redirect, the function is a no-op.

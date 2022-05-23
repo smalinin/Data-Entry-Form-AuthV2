@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="data-entry-form.css">
 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="login-jquery-modal/login-jquery-modal.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -65,7 +66,7 @@
 
           <div >
             <label style="font-weight: normal" >SPARQL Endpoint</label> 
-            <!-- CMSB: TO DO: Move default sparql endpoint of UB to const in .js -->
+            <!-- CMSB: TO DO: Default sparql endpoint. Move to a const in data-entry-form.js -->
             <input type="text" style="width: 20em" value="https://linkeddata.uriburner.com/sparql" id="sparql_endpoint">
           </div>
 
@@ -301,8 +302,7 @@
       <!-- End of tabs container -->
     </div>
 
-<!-- CMSB: jQuery modal login dialog: Start -->
-
+<!-- jQuery modal login dialog: Start -->
 <div id="dialog-form" title="Select Your Identity Provider">
   <p>Please pick an identity provider from the list below:</p>
 
@@ -342,7 +342,7 @@
   </form>
   <span class="tip"></span>
 </div>
-<!-- CMSB: jQuery modal login dialog: End -->
+<!-- jQuery modal login dialog: End -->
 
 </body>
 

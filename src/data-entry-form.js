@@ -8,8 +8,8 @@ var offset;
 var tableSize;
 var resultMode;
 
-// Start: class AppState
-// TO DO: Move to a separate file
+// --------------------------------------------------------------------------
+// class AppState: Start
 
 class AppState {
   constructor() {
@@ -35,10 +35,8 @@ class AppState {
     // See https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/functions.html#getdefaultsession
     const session = await solidClient.getDefaultSession()
     const loggedIn = (session && session.info && session.info.isLoggedIn);
-    console.log('updateLoginState(): session:', session);
-    console.log('updateLoginState(): loggedIn:', loggedIn);
-
-    // TO DO: CMSB: Need to change to use solid_client_authn.browser session
+    console.log('AppState#updateLoginState: session:', session);
+    console.log('AppState#updateLoginState: loggedIn:', loggedIn);
 
     loginButton.classList.toggle('hidden', loggedIn)
     logoutButton.classList.toggle('hidden', !loggedIn)
@@ -94,7 +92,6 @@ class AppState {
         DOC.iSel("sparql_endpoint").value = this.lastState.endpoint;
 
     } catch (e) { 
-      // CMSB: TO DO: At least log the error to the console
       console.log('Error restoring last state from session storage');
     }
 
@@ -269,16 +266,13 @@ class AppState {
     return this.lastState.tab;
   }
 
-
 }
 
-// End: class AppState
+// class AppState: End
 // --------------------------------------------------------------------------
 
-
 // --------------------------------------------------------------------------
-// Start: class DOC
-// TO DO: Move to a separate file
+// class DOC: Start
 
 class DOC {
   static qSel(sel) { return document.querySelector(sel) }
@@ -296,7 +290,7 @@ class DOC {
   static iSetValue(sel, val) { DOM.iSel(sel).value = val }
 }
 
-// End: class DOC
+// class DOC: End
 // --------------------------------------------------------------------------
 
 // 
@@ -1470,7 +1464,7 @@ async function predicateRange() {
   let url = endpoint + encodeURIComponent(range_query) + "&should-sponge=&format=application%2Fsparql-results%2Bjson";
 
   if (DOC.iSel("cmdID").checked == true) {
-    console.log("Recieving Predicate Range From: " + url);
+    console.log("Receiving Predicate Range From: " + url);
     console.log("Query" + range_query);
   }
 
@@ -1616,9 +1610,8 @@ async function turtleDel() {
 }
 
 
-//
-// These functions are used for Authentication
-// CMSB: TO DO: Move all authentication functions to a separate file
+// --------------------------------------------------------------------------
+// Authentication and WebID profile retrieval
 //
 
 async function loadProfile(webId) {
@@ -1736,18 +1729,13 @@ async function showSnackbar(text1, text2) {
 }
 
 // ==========================================================================
-// CMSB:
-// Declarations done, now execute
+// Declarations done, now execute ...
 
 // --------------------------------------------------------------------------
 // Page initialization on onready event.
 //
 
 gAppState = new AppState();
-
-// CMSB: As was: TO DO: Remove
-// const { OIDCWebClient } = OIDC;
-// const authClient = new OIDCWebClient({ solid: true });
 
 // solid-client-authn.bundle.js lib exports an object assigned to var solidClientAuthentication.
 solidClient = solidClientAuthentication;
