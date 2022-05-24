@@ -7,6 +7,10 @@ See also:
 * branch `develop`
 * [solid-client-authn-browser API](https://docs.inrupt.com/developer-tools/api/javascript/solid-client-authn-browser/)
 
+## Demo instance
+
+<https://openlinksoftware.github.io/Data-Entry-Form-AuthV2>
+
 ## Background
 
 This variant of [OpenLinkSoftware/single-page-apps](https://github.com/OpenLinkSoftware/single-page-apps) was motivated by a need to support the latest version of Solid's authentication client (solid-client-authn-browser) which in turn uses and exercises VAL's support for DPoP and ECDSA within its OIDC Authorization Server (IdP) implementation.
