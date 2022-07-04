@@ -100,10 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function initButtons () {
-  initButton('login_community', () => login('https://solid.community'))
-  initButton('login_test_space', () => login('https://solidtest.space'))
+  initButton('login_community', () => login('https://solidcommunity.net'))
+  initButton('login_inrupt', () => login('https://broker.pod.inrupt.com'))
   initButton('login_opl_oidc', () => login('https://solid.openlinksw.com:8444'))
   initButton('login_opl_v5', () => login('https://solid.openlinksw.com:8445'))
+  initButton('login_opl_v5_6', () => login('https://solid.openlinksw.com:8443'))
   initButton('login_opl_ds', () => login('https://ods-qa.openlinksw.com'))
   initButton('login_opl_uriburner', () => login('https://linkeddata.uriburner.com'))
   initButton('login_opl_myopl', () => login('https://id.myopenlink.net'))
