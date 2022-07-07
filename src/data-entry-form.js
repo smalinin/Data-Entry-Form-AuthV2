@@ -1507,7 +1507,8 @@ async function turtleGen() {
   console.log("subject: " + subject)
 
   var turtle_cmd =
-    `INSERT DATA {@prefix : <${docName}#> . ${subject}  ${predicate}  ${object} . } `
+    `prefix : <${docName}#> 
+     INSERT DATA { ${subject}  ${predicate}  ${object} . } `
 
   let url = docName;
 
@@ -1529,6 +1530,9 @@ async function turtleGen() {
 
   var resp;
   try {
+    // If the current user is authenticated, solidClient.fetch() makes 
+    // requests that include the user's credentials.
+    // i.e. a DPoP-bound access token.
     resp = await solidClient.fetch(url, options);
     if (resp.status >= 200 && resp.status <= 300) {
       hideSpinner();
@@ -1567,10 +1571,12 @@ async function turtleDel() {
 
   if (is_solid_server)
     del_cmd =
-      `DELETE DATA {@prefix : <${docName}#> . ${subject}  ${predicate}  ${object} . } `
+      `prefix : <${docName}#> 
+       DELETE DATA { ${subject}  ${predicate}  ${object} . }`
   else
     del_cmd =
-      `PREFIX : <${docName}#> DELETE DATA { GRAPH <${docName}> { ${subject} ${predicate} ${object} . } }`;
+      `PREFIX : <${docName}#> 
+       DELETE DATA { GRAPH <${docName}> { ${subject} ${predicate} ${object} . } }`;
 
   let url = docName;
   if (DOC.iSel("fctID").checked == true) {
@@ -1591,6 +1597,9 @@ async function turtleDel() {
 
   var resp;
   try {
+    // If the current user is authenticated, solidClient.fetch() makes 
+    // requests that include the user's credentials.
+    // i.e. a DPoP-bound access token.
     resp = await solidClient.fetch(url, options);
     if (resp.status >= 200 && resp.status <= 300) {
       hideSpinner();
