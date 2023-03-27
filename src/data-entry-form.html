@@ -123,10 +123,10 @@
                     data-original-title="Out box URI"></span>
                   <input type="text" class="form-control" placeholder="http://domain/DAV/outbox/" id="outboxID">
                   <p class="errorMessage" id="outboxErrorID"></p>
-                  <span>
+                  <!--span>
                    <button id="resolveBtnID" type="button"
                       class="btn btn-warning">Fetch</button>
-                  </span>
+                  </span-->
                 </div>
                 <div class="form-group">
                   <label for="apObjectID">Activity Object</label>
@@ -152,7 +152,8 @@
               <h1 style="text-align:center">Status</h1>
               <table id="apTableID" class="table table-bordered"
                 style="table-layout: fixed; max-width:600px;">
-                <div style="padding-top: 25px" id="sendResultID">Here will be status URI...</div>
+                  <div style="padding-top: 25px"><label for="sendResultID">Activity Id</label><span id="sendResultID">N/A</span></div>
+                  <div style="padding-top: 25px"><label for="apPostID">Object Id</label><span id="apPostID">N/A</span></div>
               </table>
             </div>
           </div>

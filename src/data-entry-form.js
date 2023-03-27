@@ -118,7 +118,13 @@ class AppState {
     }
     else {
       var documentName;
-      initApObject ();
+      document.getElementById('apObjectID').innerHTML = 
+            '{\n' +
+            '  "@context": "https://www.w3.org/ns/activitystreams",\n' +
+            '  "type": "Note",\n' +
+            '  "summary":null,\n' +
+            '  "content": ""\n' +
+            '}';
       if (this.getCurTab() === "fs") {
         $('a[href="#fsID"]').tab('show');
         if (this.lastState.documentName)
@@ -999,11 +1005,13 @@ async function sendActivity() {
   };
 
   var resp;
+  var activity_url = null;
   try {
     resp = await solidClient.fetch(url, options);
     if (resp.ok) {
       console.log(resp.status + " - " + resp.statusText);
-      DOC.iSel("sendResultID").innerHTML = resp.headers.get('location');
+      activity_url = resp.headers.get('location');
+      DOC.iSel("sendResultID").innerHTML = activity_url;
       hideSpinner();
     } else {
       throw new Error(`Error ${resp.status} - ${resp.statusText}`);
@@ -1014,9 +1022,47 @@ async function sendActivity() {
     console.error('Send Failed', e);
     showSnackbar('Send Failed', '' + e);
   }
-  initApObject ();
+  DOC.iSel("apObjectID").value = 
+        '{\n' +
+        '  "@context": "https://www.w3.org/ns/activitystreams",\n' +
+        '  "type": "Note",\n' +
+        '  "summary":null,\n' +
+        '  "content": ""\n' +
+        '}';
   showSnackbar('Posted');
-  await buttonDisplay();
+  showActivtyDetails (activity_url);  
+}
+
+async function showActivtyDetails (activity_url) {
+  let url = activity_url;
+  console.log (url);
+  if (!activity_url)
+    return;
+  const options = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"',
+    },
+    credentials: 'include',
+    mode: 'cors',
+    crossDomain: true,
+  };
+  try {
+    resp = await solidClient.fetch(url, options);
+    if (resp.ok) {
+      var body = await resp.text();
+      var activity = JSON.parse (body);
+      if (activity.object)
+        DOC.iSel("apPostID").innerHTML = activity.object.id;
+      else
+        DOC.iSel("apPostID").innerHTML = 'N/A';
+    } else {
+      throw new Error(`Error ${resp.status} - ${resp.statusText}`);
+    }
+  } catch (e) {
+    console.error('Fetch Failed', e);
+    showSnackbar('Fetch Failed', '' + e);
+  }
 }
 
 //updateTable(); //Table is always shown when page is loaded
@@ -1861,16 +1907,6 @@ async function showSnackbar(text1, text2) {
   await delay(tm);
 }
 
-function initApObject () {
-  document.getElementById('apObjectID').innerHTML = 
-        '{\n' +
-        '  "@context": "https://www.w3.org/ns/activitystreams",\n' +
-        '  "type": "Note",\n' +
-        '  "summary":null,\n' +
-        '  "content": ""\n' +
-        '}';
-}
-
 // ==========================================================================
 // Declarations done, now execute ...
 
@@ -1904,7 +1940,7 @@ $(document).ready(function () {
   DOC.iSel('objectID').onchange = () => { gAppState.updatePermalink() }
   DOC.iSel('docNameID').onchange = () => { gAppState.updatePermalink() }
 
-  DOC.iSel('resolveBtnID').onclick = () => { resolveOutBox() }
+  //DOC.iSel('resolveBtnID').onclick = () => { resolveOutBox() }
   DOC.iSel('sendBtnID').onclick = () => { sendActivity() }
 
   DOC.iSel('clearBtnID').onclick = () => { gAppState.clearInput() }
