@@ -1,0 +1,6 @@
+var globals = { 
+        dav_link: "https://localhost:8443/DAV/home/demo/Public/record-test.ttl",
+        describe: "https://localhost:8443/describe/?url=",
+        sparql_endpoint: "https://localhost:8443/sparql",
+        host: "https://localhost:8443" 
+};

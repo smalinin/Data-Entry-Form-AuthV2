@@ -118,16 +118,19 @@ class AppState {
     }
     else {
       var documentName;
-      document.getElementById('apObjectID').innerHTML = 
+      DOC.iSel('apObjectID').innerHTML = 
             '{\n' +
             '  "@context": "https://www.w3.org/ns/activitystreams",\n' +
             '  "type": "Note",\n' +
             '  "summary":null,\n' +
             '  "content": ""\n' +
             '}';
+      document.getElementById('login_custom_idp').value = globals.host;  
+      document.getElementById('docNameID2').value = globals.dav_link;  
+      document.getElementById('sparql_endpoint').value = globals.sparql_endpoint;  
       if (this.getCurTab() === "fs") {
         $('a[href="#fsID"]').tab('show');
-        if (this.lastState.documentName)
+      if (this.lastState.documentName)
           document.getElementById('docNameID2').value = this.lastState.documentName;
       } else if (this.getCurTab() === "dbms") {
         $('a[href="#dbmsID"]').tab('show');
@@ -235,7 +238,7 @@ class AppState {
       DOC.iSel("docNameID2").value = solid_storage_value;
     } else {
       DOC.iSel("docNameID").value = "urn:records:test";
-      DOC.iSel("docNameID2").value = "https://localhost:8443/DAV/home/dba/Public/record-test.ttl";
+      DOC.iSel("docNameID2").value = globals.dav_link;
     }
 
     // value from permalink
@@ -613,8 +616,8 @@ function tableFormat(str) {
   var graph = gAppState.checkValue("docNameID", "docNameID2");
   var strLabel = str; // variable for what is show on screen in the href
 
-  if (str.includes("https://localhost:8443/describe/?url=")) {// of str is in fct format
-    strLabel = strLabel.replace("https://localhost:8443/describe/?url=", "");
+  if (str.includes(globals.describe)) {// of str is in fct format
+    strLabel = strLabel.replace(globals.describe, "");
     strLabel = strLabel.replace("%23", "#");
   }
 
@@ -1429,17 +1432,17 @@ async function queryGen() {
           var object = data.results.bindings[i].object.value;
           if (DOC.iSel("fctID").checked == true) { //if fct checkbox is checked
             if (subject.includes(graph) || regexp.test(subject)) { //if subject is not a literal value
-              subject = "https://localhost:8443/describe/?url=" + data.results.bindings[i].subject.value;
+              subject = globals.describe + data.results.bindings[i].subject.value;
               subject = subject.replace("#", "%23"); // replaces # with %23 for fct results
             }
 
             if (predicate.includes(graph) || regexp.test(predicate)) { //if subject is not a literal value
-              predicate = "https://localhost:8443/describe/?url=" + data.results.bindings[i].predicate.value;
+              predicate = globals.describe + data.results.bindings[i].predicate.value;
               predicate = predicate.replace("#", "%23");
             }
 
             if (object.includes(graph) || regexp.test(object)) {
-              object = "https://localhost:8443/describe/?url=" + data.results.bindings[i].object.value;
+              object = globals.describe + data.results.bindings[i].object.value;
               object = object.replace("#", "%23");
             } else { //if object is literal value
               object = data.results.bindings[i].object.value;
@@ -1568,17 +1571,17 @@ async function updateTable() {
           var object = data.results.bindings[i].object.value;
           if (DOC.iSel("fctID").checked == true) { //if fct checkbox is checked
             if (subject.includes(graph) || regexp.test(subject)) { //if subject is not a literal value
-              subject = "https://localhost:8443/describe/?url=" + data.results.bindings[i].subject.value;
+              subject = globals.describe + data.results.bindings[i].subject.value;
               subject = subject.replace("#", "%23"); // replaces # with %23 for fct results
             }
 
             if (predicate.includes(graph) || regexp.test(predicate)) { //if subject is not a literal value
-              predicate = "https://localhost:8443/describe/?url=" + data.results.bindings[i].predicate.value;
+              predicate = globals.describe + data.results.bindings[i].predicate.value;
               predicate = predicate.replace("#", "%23");
             }
 
             if (object.includes(graph) || regexp.test(object)) {
-              object = "https://localhost:8443/describe/?url=" + data.results.bindings[i].object.value;
+              object = globals.describe + data.results.bindings[i].object.value;
               object = object.replace("#", "%23");
             } else { //if object is literal value
               object = data.results.bindings[i].object.value;
