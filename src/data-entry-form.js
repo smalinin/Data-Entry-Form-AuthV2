@@ -892,7 +892,7 @@ async function setTableSize() {
     } else {
       var msg = await resp.text();
       hideSpinner();
-      console.error("Error: " + msg)
+      console.error("Error: " + resp.status)
       await showSnackbar('Table Size Failed', `SPARQL endpoint Error: ${resp.status} ${resp.statusText}`);
     }
 
@@ -930,9 +930,7 @@ async function resolveOutBox() {
     resp = await solidClient.fetch(url, options);
     if (resp.ok) {
       var body = await resp.text();
-      // ck for json
       var profile = JSON.parse (body);
-      // ck for outbox
       DOC.iSel("outboxID").value = profile.outbox;
       console.log(resp.status + " - " + resp.statusText);
       hideSpinner();
@@ -943,7 +941,7 @@ async function resolveOutBox() {
   } catch (e) {
     hideSpinner();
     console.error('Fetch Failed', e);
-    showSnackbar('Fetch Failed', '' + e);
+    showSnackbar('Outbox Fetch Failed', '' + e);
   }
 }
 
@@ -1546,7 +1544,7 @@ async function updateTable() {
   const options = {
     method: 'GET',
     headers: {
-      'Content-type': 'application/sparql-results+json; charset=UTF-8',
+      'Accept': 'application/sparql-results+json; charset=UTF-8',
     },
     credentials: 'include',
     mode: 'cors',
