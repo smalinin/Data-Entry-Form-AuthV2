@@ -609,6 +609,15 @@ function nonvalidatedObject() {
 // These functions handle the data table
 //
 
+function makeLink(link) {
+  var href = link;
+  if (DOC.iSel("fctID").checked == true) { //if fct checkbox is checked
+      href = globals.describe + link;
+  }    
+  link = '<a target="_blank" href="' + href + '">' + link + '</a>';
+  return link;
+}
+
 // This function allows hyperlinks to be used in the table
 function tableFormat(str) {
   // Regular Expression for URIs in table specifically
@@ -1012,7 +1021,7 @@ async function sendActivity() {
     if (resp.ok) {
       console.log(resp.status + " - " + resp.statusText);
       activity_url = resp.headers.get('location');
-      DOC.iSel("sendResultID").innerHTML = activity_url;
+      DOC.iSel("sendResultID").innerHTML = makeLink(activity_url);
       hideSpinner();
     } else {
       throw new Error(`Error ${resp.status} - ${resp.statusText}`);
@@ -1054,7 +1063,7 @@ async function showActivtyDetails (activity_url) {
       var body = await resp.text();
       var activity = JSON.parse (body);
       if (activity.object)
-        DOC.iSel("apPostID").innerHTML = activity.object.id;
+        DOC.iSel("apPostID").innerHTML = makeLink(activity.object.id);
       else
         DOC.iSel("apPostID").innerHTML = 'N/A';
     } else {
@@ -1992,6 +2001,8 @@ $(document).ready(function () {
     }
   });
 
+  if (typeof (globals) == 'undefined')
+    $('#configError').modal('show');
   // check for permalink
   gAppState.loadPermalink();
 
