@@ -1,6 +1,6 @@
 var globals = { 
-        dav_link: "https://localhost:8443/DAV/home/demo/Public/record-test.ttl",
-        describe: "https://localhost:8443/describe/?url=",
-        sparql_endpoint: "https://localhost:8443/sparql",
-        host: "https://localhost:8443" 
+        dav_link: "https://id.myopenlink.net/public_home/KingsleyUyiIdehen/RWW-QA/test1.ttl",
+        describe: "https://linkeddata.uriburner.com/describe/?url=",
+        sparql_endpoint: "https://linkeddata.uriburner.com/sparql",
+        host: "https://linkeddata.uriburner.com"
 };
