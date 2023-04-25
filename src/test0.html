@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Select your Identity Provider</title>
+  <script src="./solid-client-authn.bundle.js"></script>
+  <script src="./test0.js"></script>
+
+  <style>
+    body, button, input {
+     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+     font-size: 11pt;
+    }
+
+    p {
+      margin: .75em 0;
+    }
+
+    h1 {
+      font-weight: normal;
+      padding-bottom: 10px;
+    }
+
+    button {
+      border: 1px solid grey;
+      border-radius: 2px;
+      padding: 4px;
+      margin-left: 4px;
+      cursor: pointer;
+    }
+
+    :focus {
+      outline: none;
+    }
+
+    #app-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .idp-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .idp {
+      flex: 1 100%;
+      margin: .5em;
+
+      border: none;
+      border-radius: 2px;
+      padding: .5em;
+      background-color: rgb(61, 109, 211);
+      color: #fff;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.4s, box-shadow 0.4s;
+    }
+
+    .idp:hover,
+    .idp:focus {
+      background-color: rgb(55, 97, 188);
+      box-shadow: 1px 1px rgb(46, 80, 151);
+    }
+
+    .idp:active {
+      cursor: pointer;
+      box-shadow: inset 1px 1px rgb(46, 80, 152);
+    }
+
+    .idp .icon {
+      display: flex;
+      height: 42px;
+      border-radius: 2px;
+      margin-left: .5em;
+    }
+
+    .custom-idp {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      margin: .5em;
+    }
+
+    .custom-idp input {
+      flex-grow: 2;
+    }
+
+    .hidden {
+      display: none!important;
+    }
+
+    @media all and (min-width: 500px) {
+      .idp {
+        flex: 1 200px;
+      }
+    }
+
+    #app-container {
+      max-widht: 600px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<div id="app-container">
+  <div>
+<!--
+    <p>Please enter your WebID or the URL of your identity provider:</p>
+    <form class="custom-idp" id="custom-idp-form">
+      <input type="url" id="custom-idp" placeholder="https://my-identity.provider">
+      <button type="button" id="login-custom">Go</button>
+    </form>
+-->
+    <p>Or pick an identity provider from the list below:</p>
+    <div class="idp-list">
+      <button type="button" id="login_opl_uriburner" class="idp">
+        <span class="label">OpenLink URIBurner Service</span>
+      </button>
+    </div>
+  </div>
+  <div id="logged" class="container hidden">
+    <h4><p>Logged In as:</p></h4>
+    <p id="webid"></p>
+      <button type="button" id="logout" class="idp hidden" style="color:black; background:lightgray;">
+        <span class="label">Logout</span>
+      </button>
+  </div>
+</div>
+
+</body>
+</html>
