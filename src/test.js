@@ -53,7 +53,7 @@ function setField (id, value) {
 // Post-login attempt redirect handler.
 // When redirected after login, finish the process by retrieving session information.
 async function handleRedirectAfterLogin() {
-  await client.handleIncomingRedirect();
+  await client.handleIncomingRedirect({restorePreviousSession: true});
 
   const session = client.getDefaultSession();
   console.log('handleRedirectAfterLogin(): session:', session);
