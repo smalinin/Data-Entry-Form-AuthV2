@@ -85,6 +85,13 @@ function setField (id, value) {
 
   if (authCode) {
     localStorage.setItem('myCode', location.href);
+//
+// --- store ---
+//
+// issuerConfig:*
+// solidClientAuthenticationUser:*
+// oidc.*
+//
   }
 
 
@@ -97,7 +104,8 @@ function setField (id, value) {
 // Post-login attempt redirect handler.
 // When redirected after login, finish the process by retrieving session information.
 async function handleRedirectAfterLogin() {
-  await client.handleIncomingRedirect({restorePreviousSession: true});
+  const ret = await client.handleIncomingRedirect({restorePreviousSession: true});
+  console.log('ret = ', ret);
 
   const session = client.getDefaultSession();
   console.log('handleRedirectAfterLogin(): session:', session);
