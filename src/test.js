@@ -1,19 +1,21 @@
+const client = solidClientAuthentication.default;
+
 function login (idp) {
   console.log('login(): Calling solidClientAuthentication.login():'); 
   console.log('for idp: ' + idp);
   // CMSB: TO DO: 
   // Bolster error handling and logging.
   // What error reporting does solidClientAuthentication.login() support?
-  solidClientAuthentication.login({
+  client.login({
     oidcIssuer: idp,
     redirectUrl: window.location.href,
-    clientName: "OpenLink Data Entry SPA"
+    clientName: "OSDS"
   });
 }
 
 function logout () {
   console.log('Logging out...')
-  solidClientAuthentication.logout();
+  client.logout();
   window.location.reload();
   hide('logged')
   hide('logout')
@@ -51,9 +53,9 @@ function setField (id, value) {
 // Post-login attempt redirect handler.
 // When redirected after login, finish the process by retrieving session information.
 async function handleRedirectAfterLogin() {
-  await solidClientAuthentication.handleIncomingRedirect();
+  await client.handleIncomingRedirect();
 
-  const session = solidClientAuthentication.getDefaultSession();
+  const session = client.getDefaultSession();
   console.log('handleRedirectAfterLogin(): session:', session);
   console.log('handleRedirectAfterLogin(): session.info.isLoggedIn: ', session.info.isLoggedIn);
   if (session.info.isLoggedIn) {
