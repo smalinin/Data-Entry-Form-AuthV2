@@ -26,7 +26,8 @@ function initButton(id, action) {
 }
 
 function initButtons () {
-  initButton('login_opl_uriburner', () => login('https://linkeddata.uriburner.com'))
+//  initButton('login_opl_uriburner', () => login('https://linkeddata.uriburner.com'))
+  initButton('login_opl_uriburner', () => login('https://solid.openlinksw.com:8443'))
   initButton('logout', () => logout())
 }
 
