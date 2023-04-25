@@ -19,6 +19,16 @@ function initButtons () {
   initButton('login_opl_uriburner', () => login('https://linkeddata.uriburner.com'))
 }
 
+function show (id) {
+  document.getElementById(id).classList.remove('hidden')
+}
+function setField (id, value) {
+  var field = document.getElementById(id)
+  if (field) {
+    field.innerHTML = value
+  }
+}
+
 
   document.addEventListener('DOMContentLoaded', async () => {
     initButtons();
@@ -38,6 +48,12 @@ async function handleRedirectAfterLogin() {
     console.log('handleRedirectAfterLogin(): session.info.webId: ', session.info.webId);
     // Update the page with the login status.
 //??    gAppState.updateLoginState();
+    if (session.info && session.info.isLoggedIn && session.info.webId) {
+      show('logged')
+      show('logout')
+      setField("webid", session.info.webId)
+    }
+
   }
 }
 
