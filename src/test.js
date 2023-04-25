@@ -11,12 +11,23 @@ function login (idp) {
   });
 }
 
+function logout () {
+  console.log('Logging out...')
+  solidClientAuthentication.logout();
+  window.location.reload();
+  hide('logged')
+  hide('logout')
+}
+
+
+
 function initButton(id, action) {
   document.getElementById(id).addEventListener('click', action)
 }
 
 function initButtons () {
   initButton('login_opl_uriburner', () => login('https://linkeddata.uriburner.com'))
+  initButton('logout', () => logout())
 }
 
 function show (id) {
