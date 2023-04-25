@@ -232,7 +232,9 @@ handleRedirectAfterLogin();
     document.getElementById('custom-idp').value = provider;
 
     try {
-     if (!session.info.isLoggedIn) 
+     const session = solidClientAuthentication.getDefaultSession();
+
+     if (!session.info.isLoggedIn || !session.info) 
      {
         // If you are not logged in, initiate the login
         await client.login({
