@@ -117,6 +117,6 @@ async function handleRedirectAfterLogin() {
 
 // Processes login information.
 // If the function is called when not part of the login redirect, the function is a no-op.
-handleRedirectAfterLogin();
+//??handleRedirectAfterLogin();
 
 
