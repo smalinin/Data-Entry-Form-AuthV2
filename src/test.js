@@ -51,7 +51,7 @@ function initButtons () {
   initButton('login_opl_uriburner', () => login('https://solid.openlinksw.com:8446'))
   initButton('logout', () => logout())
 
-  initButton('test_restore', () => {
+  initButton('test_restore', async () => {
     var u = localStorage.getItem('myCode');
     if (u) {
       await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
