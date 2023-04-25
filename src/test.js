@@ -54,7 +54,9 @@ function initButtons () {
   initButton('test_restore', async () => {
     var u = localStorage.getItem('myCode');
     if (u) {
-      await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
+      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
+      console.log('ret = ', ret);
+      localStorage.setItem('myTokens', JSON.stringify(ret));
       checkSession();
     }
     
@@ -85,13 +87,14 @@ function setField (id, value) {
 
   if (authCode) {
     localStorage.setItem('myCode', location.href);
-//
+
+// -- first --
 // --- store ---
 //
 // issuerConfig:*
 // solidClientAuthenticationUser:*
 // oidc.*
-//
+// + callback URL after Login
   }
 
 
@@ -100,7 +103,7 @@ function setField (id, value) {
 
 
 
-
+  
 // Post-login attempt redirect handler.
 // When redirected after login, finish the process by retrieving session information.
 async function handleRedirectAfterLogin() {
