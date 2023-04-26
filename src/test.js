@@ -53,11 +53,25 @@ function initButtons () {
 
   initButton('test_restore', async () => {
     var u = localStorage.getItem('myCode');
-    var tokens = localStorage.getItem('myTokens');
     if (u) {
-      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true, tokens});
+      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
       console.log('ret = ', ret);
       localStorage.setItem('myTokens', JSON.stringify(ret));
+      if (ret.tokens)
+      checkSession();
+    }
+    
+  })
+
+
+  initButton('test_restore2', async () => {
+    var u = localStorage.getItem('myCode');
+    var stokens = localStorage.getItem('myTokens');
+    if (u) {
+      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true, tokens: stokens||null});
+      console.log('ret = ', ret);
+      localStorage.setItem('myTokens', JSON.stringify(ret));
+      if (ret.tokens)
       checkSession();
     }
     
