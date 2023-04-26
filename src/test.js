@@ -73,7 +73,7 @@ function initButtons () {
   initButton('test_restore2', async () => {
     var v = localStorage.getItem('myCode');
     var stokens = localStorage.getItem('myTokens');
-    if (u) {
+    if (v) {
       var myCode = JSON.parse(v);
       for(var key in myCode) {
         if (key.startsWith('issuerConfig:') || key.startsWith('solidClientAuthenticationUser:') || key.startsWith('oidc.'))
