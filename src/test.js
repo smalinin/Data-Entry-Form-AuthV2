@@ -55,7 +55,7 @@ function initButtons () {
     var u = localStorage.getItem('myCode');
     var tokens = localStorage.getItem('myTokens');
     if (u) {
-      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
+      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true, tokens});
       console.log('ret = ', ret);
       localStorage.setItem('myTokens', JSON.stringify(ret));
       checkSession();
