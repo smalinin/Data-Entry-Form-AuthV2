@@ -53,6 +53,7 @@ function initButtons () {
 
   initButton('test_restore', async () => {
     var u = localStorage.getItem('myCode');
+    var tokens = localStorage.getItem('myTokens');
     if (u) {
       const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
       console.log('ret = ', ret);
