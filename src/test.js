@@ -52,9 +52,15 @@ function initButtons () {
   initButton('logout', () => logout())
 
   initButton('test_restore', async () => {
-    var u = localStorage.getItem('myCode');
-    if (u) {
-      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true});
+    var v = localStorage.getItem('myCode');
+    if (v) {
+      var myCode = JSON.parse(v);
+      for(var key in myCode) {
+        if (key.startsWith('issuerConfig:') || key.startsWith('solidClientAuthenticationUser:') || key.startsWith('oidc.'))
+          localStorage.setItem(key, myCode[key]);
+      }
+
+      const ret = await client.handleIncomingRedirect({url:myCode.url, restorePreviousSession: true});
       console.log('ret = ', ret);
       if (ret.tokens)
         localStorage.setItem('myTokens', JSON.stringify(ret.tokens));
@@ -65,13 +71,18 @@ function initButtons () {
 
 
   initButton('test_restore2', async () => {
-    var u = localStorage.getItem('myCode');
+    var v = localStorage.getItem('myCode');
     var stokens = localStorage.getItem('myTokens');
     if (u) {
-      var mtokens = null;
-      if (stokens) 
-        mtokens = JSON.parse(stokens);
-      const ret = await client.handleIncomingRedirect({url:u, restorePreviousSession: true, tokens: mtokens});
+      var myCode = JSON.parse(v);
+      for(var key in myCode) {
+        if (key.startsWith('issuerConfig:') || key.startsWith('solidClientAuthenticationUser:') || key.startsWith('oidc.'))
+          localStorage.setItem(key, myCode[key]);
+      }
+
+      var mtokens = stokens ? JSON.parse(stokens) : null;
+
+      const ret = await client.handleIncomingRedirect({url:myCode.url, restorePreviousSession: true, tokens: mtokens});
       console.log('ret = ', ret);
       checkSession();
     }
@@ -102,8 +113,15 @@ function setField (id, value) {
     new URL(window.location.href).searchParams.get("access_token");
 
   if (authCode) {
-    localStorage.setItem('myCode', location.href);
+    var myCode = {url: location.href}
+//    localStorage.setItem('myCode', location.href);  
 
+      for(var i=0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key.startsWith('issuerConfig:') || key.startsWith('solidClientAuthenticationUser:') || key.startsWith('oidc.'))
+          myCode[key] = localStorage.getItem(key);
+      }
+    localStorage.setItem('myCode', JSON.stringify(myCode));  
 // -- first --
 // --- store ---
 //
