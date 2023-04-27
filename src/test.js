@@ -61,6 +61,15 @@ function initButtons () {
         if (key.startsWith('issuerConfig:') || key.startsWith('solidClientAuthenticationUser:') || key.startsWith('oidc.'))
           localStorage.setItem(key, myCode[key]);
       }
+      const url = new URL(myCode.url);
+      const state = url.searchParams.get("state");
+      const session = myCode['solidClientAuthenticationUser:'+state];
+      if (session && session.sessionId) {
+        const session_data = myCode['solidClientAuthenticationUser:'+session.sessionId];
+        if (session_data) {
+          console.log('IDP='+session_data.issuer)
+        }
+      }
 
       const ret = await client.handleIncomingRedirect({url:myCode.url, restorePreviousSession: true});
       console.log('ret = ', ret);
