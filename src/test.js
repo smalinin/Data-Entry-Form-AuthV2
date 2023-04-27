@@ -63,9 +63,9 @@ function initButtons () {
       }
       const url = new URL(myCode.url);
       const state = url.searchParams.get("state");
-      const session = myCode['solidClientAuthenticationUser:'+state];
+      const session = JSON.parse(myCode['solidClientAuthenticationUser:'+state]);
       if (session && session.sessionId) {
-        const session_data = myCode['solidClientAuthenticationUser:'+session.sessionId];
+        const session_data = JSON.parse(myCode['solidClientAuthenticationUser:'+session.sessionId]);
         if (session_data) {
           console.log('IDP='+session_data.issuer)
         }
